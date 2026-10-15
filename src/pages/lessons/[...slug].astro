@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { href, paths, repository } from '../../lib/site';
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons', ({data}) => !data.draft);
+  return lessons.map(lesson => ({ params: { slug: lesson.id }, props: { lesson } }));
+}
+const { lesson } = Astro.props;
+const { Content, headings } = await render(lesson);
+const category = paths.find(path => path.name === lesson.data.category)!;
+const date = lesson.data.publishedAt?.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+---
+<Base title={lesson.data.title} description={lesson.data.description}>
+  <header class="shell article-heading"><a class="eyebrow text-link" href={href(`topics/${category.id}/`)}>← {category.name}</a><h1>{lesson.data.title}</h1><p>{lesson.data.description}</p><div class="article-meta"><time datetime={lesson.data.publishedAt?.toISOString()}>{date}</time>{lesson.data.durationMinutes && <span>{lesson.data.durationMinutes} min video</span>}{lesson.data.slides && <a href={href(lesson.data.slides)}>Open lesson slides ↗</a>}</div></header>
+  <div class="shell article-grid"><aside class="toc" aria-label="On this page"><p class="eyebrow">IN THIS LESSON</p><nav>{headings.filter(h=>h.depth===2).map(heading=><a href={`#${heading.slug}`}>{heading.text}</a>)}</nav><a class="text-link" href={`${repository}/blob/main/src/content/lessons/${lesson.id}.md`}>View on GitHub ↗</a></aside><article class="prose"><Content /></article></div>
+  <div class="shell article-end"><a class="text-link" href={href('lessons/')}>← Explore more lessons</a></div>
+</Base>

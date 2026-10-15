@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { href, repository } from '../lib/site';
+---
+<Base title="About the lab" description="MBR CyberLab is a personal learning project that connects technical understanding, English explanations, and practical exploration.">
+  <section class="shell page-heading"><p class="eyebrow">ABOUT MBR CYBERLAB</p><h1>Learn. Explain.<br/>Build understanding.</h1><p>A personal learning project with a practical purpose: make technical ideas easier to understand and useful to revisit.</p></section>
+  <section class="shell about-grid"><div class="about-note"><span class="eyebrow">WHY THIS LAB EXISTS</span><h2>A place to practice<br/>in the open.</h2><p>MBR CyberLab brings together two habits: revisiting technical concepts and explaining them in English. Turning an idea into a short lesson helps reveal what makes sense and what needs another look.</p><p>The focus is on networking, cybersecurity, Linux, and Windows. Each lesson aims to answer one clear question, develop an example, and give you a way to explore it yourself.</p><a class="text-link" href={repository}>Explore the project on GitHub ↗</a></div>
+    <div class="lesson-method"><h2>Inside a lesson</h2><ol><li><strong>A clear starting point</strong><span>The goal, the audience, and what to know beforehand.</span></li><li><strong>A video and a readable explanation</strong><span>Watch the lesson or learn from the article on its own.</span></li><li><strong>A useful example</strong><span>Diagrams and practical steps that make the idea concrete.</span></li><li><strong>A way to check understanding</strong><span>Practice, common mistakes, key takeaways, and sources.</span></li></ol></div>
+  </section>
+  <section class="shell about-cta"><h2>Begin with a connection.</h2><p>The Network path is our starting point.</p><a class="button primary" href={href('topics/network/')}>Explore Network ↗</a></section>
+</Base>

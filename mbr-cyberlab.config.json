@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "repository_url": "https://github.com/mmrjb/mbr-cyberlab",
+  "site_url": "https://mmrjb.github.io/mbr-cyberlab/",
+  "site_url_status": "pending_first_deployment",
+  "framework": "Astro",
+  "project_root": ".",
+  "content_directory": "src/content/lessons",
+  "content_template": "templates/lesson.md",
+  "public_slides_directory": "public/slides",
+  "public_diagrams_directory": "public/diagrams",
+  "lesson_url_pattern": "https://mmrjb.github.io/mbr-cyberlab/lessons/{slug}/",
+  "slides_url_pattern": "https://mmrjb.github.io/mbr-cyberlab/slides/{slug}.html",
+  "deploy_branch": "main",
+  "deploy_workflow": ".github/workflows/deploy.yml",
+  "install_command": "npm ci",
+  "check_command": "npm run check",
+  "build_command": "npm run build",
+  "publication_mode": "auto_after_article",
+  "merge_strategy": "direct",
+  "setup_status": "awaiting_pages_activation"
+}

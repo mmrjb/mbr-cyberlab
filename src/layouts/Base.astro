@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import { brand, description as defaultDescription, href, repository } from '../lib/site';
+interface Props { title?: string; description?: string; noindex?: boolean; }
+const { title, description = defaultDescription, noindex = false } = Astro.props;
+const pageTitle = title ? `${title} | ${brand}` : `${brand} — Understand. Explain. Practice.`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const isActive = (path: string) => path === '' ? Astro.url.pathname === href('') : Astro.url.pathname.startsWith(href(path));
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f8f4" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={href('brand/mbr-logo.png')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(href('brand/mbr-logo.png'), Astro.site)} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href={href('')} aria-label="MBR CyberLab home">
+          <img src={href('brand/mbr-logo.png')} width="43" height="43" alt="" />
+          <span>MBR <strong>CyberLab</strong></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href={href('')} aria-current={isActive('') ? 'page' : undefined}>Home</a>
+          <a href={href('lessons/')} aria-current={isActive('lessons/') ? 'page' : undefined}>Lessons</a>
+          <a href={href('about/')} aria-current={isActive('about/') ? 'page' : undefined}>About</a>
+          <a class="nav-github" href={repository}>GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div><a class="brand footer-brand" href={href('')}>MBR <strong>CyberLab</strong></a><p>Understand it. Explain it. Try it.</p></div>
+        <div class="footer-links"><a href={href('lessons/')}>Explore lessons</a><a href={href('about/')}>About the lab</a><a href={repository}>Find us on GitHub ↗</a></div>
+        <p class="copyright">© {new Date().getUTCFullYear()} MBR CyberLab</p>
+      </div>
+    </footer>
+  </body>
+</html>

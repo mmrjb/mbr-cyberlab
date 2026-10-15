@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { href } from '../lib/site';
+interface Props { lessons: CollectionEntry<'lessons'>[]; }
+const { lessons } = Astro.props;
+---
+<div class="lesson-list">
+  {lessons.map(lesson => <a class="lesson-row" href={href(`lessons/${lesson.id}/`)}>
+    <div class="lesson-category">{lesson.data.category}</div>
+    <div><h3>{lesson.data.title}</h3><p>{lesson.data.description}</p></div>
+    <span class="lesson-duration">{lesson.data.durationMinutes ? `${lesson.data.durationMinutes} min video` : 'Read & practice'} <span aria-hidden="true">↗</span></span>
+  </a>)}
+</div>

@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import LessonList from '../../components/LessonList.astro';
+import { href, paths } from '../../lib/site';
+const lessons = (await getCollection('lessons', ({data}) => !data.draft)).sort((a,b) => (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0));
+---
+<Base title="Lessons">
+  <div class="shell page-heading"><p class="eyebrow">THE LEARNING LIBRARY</p><h1>One idea at a time.</h1><p>Browse explanations, diagrams, and practice across four learning paths.</p></div>
+  <div class="shell lesson-browser">
+    <nav class="topic-tabs" aria-label="Learning paths"><a href={href('lessons/')} aria-current="page">All lessons</a>{paths.map(path => <a href={href(`topics/${path.id}/`)}>{path.name}</a>)}</nav>
+    {lessons.length ? <LessonList lessons={lessons}/> : <div class="empty-state"><span class="eyebrow">THE FIRST CHAPTER</span><h2>The first lesson is taking shape.</h2><p>We’re beginning with <strong>What Is a Computer Network?</strong><br/>Its video, written explanation, slides, and practice will appear here when ready.</p><a class="button primary" href={href('topics/network/')}>Start with Network ↗</a></div>}
+  </div>
+</Base>

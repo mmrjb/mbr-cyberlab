@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import LessonList from '../../components/LessonList.astro';
+import { href, paths } from '../../lib/site';
+export function getStaticPaths() { return paths.map(path => ({ params: { topic: path.id }, props: { path } })); }
+const { path } = Astro.props;
+const lessons = (await getCollection('lessons', ({data}) => !data.draft && data.category === path.name)).sort((a,b) => (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0));
+---
+<Base title={`${path.name} lessons`} description={path.description}>
+  <section class="shell page-heading topic-heading"><div><p class="eyebrow">LEARNING PATH / {path.number}</p><h1>{path.name}</h1><p>{path.description}</p></div><span class="large-symbol" aria-hidden="true">{path.symbol}</span></section>
+  <div class="shell lesson-browser"><nav class="topic-tabs" aria-label="Learning paths"><a href={href('lessons/')}>All lessons</a>{paths.map(item => <a href={href(`topics/${item.id}/`)} aria-current={item.id===path.id ? 'page':undefined}>{item.name}</a>)}</nav>
+    <div class="topic-summary"><h2>What we’ll explore</h2><ul>{path.topics.map(topic => <li>{topic}</li>)}</ul></div>
+    {lessons.length ? <LessonList lessons={lessons}/> : <div class="empty-state"><p class="eyebrow">IN PREPARATION</p><h2>{path.id === 'network' ? 'First up: What Is a Computer Network?' : 'This learning path is just beginning.'}</h2><p>{path.id === 'network' ? 'The first lesson will connect the big idea to a familiar example: devices sharing a printer.' : 'Lessons will be added here as they are recorded and the companion material is ready.'}</p><a class="text-link" href={href('about/')}>How MBR CyberLab works ↗</a></div>}
+  </div>
+</Base>
