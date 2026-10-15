@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repository_url": "https://github.com/mmrjb/mbr-cyberlab",
   "site_url": "https://mmrjb.github.io/mbr-cyberlab/",
-  "site_url_status": "pending_first_deployment",
+  "site_url_status": "live",
   "framework": "Astro",
   "project_root": ".",
   "content_directory": "src/content/lessons",
@@ -18,5 +18,10 @@
   "build_command": "npm run build",
   "publication_mode": "auto_after_article",
   "merge_strategy": "direct",
-  "setup_status": "awaiting_pages_activation"
+  "setup_status": "configured",
+  "first_verified_deployment": {
+    "commit": "2c433524f7f5cc4cd93fa82267923aaefa6a4d53",
+    "workflow_run_url": "https://github.com/mmrjb/mbr-cyberlab/actions/runs/38786755161",
+    "verified_on": "2026-10-15"
+  }
 }
